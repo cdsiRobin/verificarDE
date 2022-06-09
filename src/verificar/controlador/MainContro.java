@@ -37,9 +37,11 @@ public class MainContro extends Thread  {
 					DocumentoServi docuContro = new DocumentoServi();
 					DocumentoEnti docuEnti = docuContro.getDocumento(documento, arfamc.getDirecSfs());
 					if(docuEnti != null) {
-						arfafeContro.actuEstadoSunatDocuElec(arfamc.getCia(), docuEnti.getNUM_DOCU(), docuEnti.getIND_SITU());				
-						String texto = arfamc.getCia()+"-"+docuEnti.getNUM_DOCU()+" ESTADO SFS "+docuEnti.getIND_SITU()+", ESTADO ISANEG ERP :"+this.cambioEstado(docuEnti.getIND_SITU())+"\n";
-						this.verTexto(texto);	
+						if(docuEnti.getIND_SITU() != null || docuEnti.getIND_SITU() != "") {
+							arfafeContro.actuEstadoSunatDocuElec(arfamc.getCia(), docuEnti.getNUM_DOCU(), docuEnti.getIND_SITU());				
+							String texto = arfamc.getCia()+"-"+docuEnti.getNUM_DOCU()+" ESTADO SFS "+docuEnti.getIND_SITU()+", ESTADO ISANEG ERP :"+this.cambioEstado(docuEnti.getIND_SITU())+"\n";
+							this.verTexto(texto);
+						}						
 					}else {
 						String texto = arfamc.getCia()+"_"+documento+" no existe en la BD SQLITE.\n";
 						this.verTexto(texto);
@@ -60,22 +62,29 @@ public class MainContro extends Thread  {
 		this.txaLog.setText( this.txaLog.getText()+"\n"+texto );
 	}
 	
-     private String cambioEstado(String estadoSunat) {
-	    	String resultado = "";
-	    	switch (estadoSunat) {
-				case "04":
-					resultado = "3";
-				case "03":
-					resultado = "2";
-				case "12":
-					resultado = "3";
-				case "05":
-					resultado = "1";
-				case "11":
-					resultado = "2";
-			}
-	    	return resultado;
-	    }
+	private String cambioEstado(String estadoSunat) {
+    	String resultado = "";
+    	switch (estadoSunat) {
+			case "04":
+				resultado = "3";
+				break;
+			case "03":
+				resultado = "2";
+				break;
+			case "12":
+				resultado = "3";
+				break;
+			case "05":
+				resultado = "1";
+				break;
+			case "11":
+				resultado = "2";
+			default:
+				resultado = "0";
+				break;
+		}
+    	return resultado;
+    }
 
 	public String getCia() {
 		return cia;

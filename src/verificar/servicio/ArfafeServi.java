@@ -30,14 +30,21 @@ public class ArfafeServi {
     	switch (estadoSunat) {
 			case "04":
 				resultado = "3";
+				break;
 			case "03":
 				resultado = "2";
+				break;
 			case "12":
 				resultado = "3";
+				break;
 			case "05":
 				resultado = "1";
+				break;
 			case "11":
 				resultado = "2";
+			default:
+				resultado = "0";
+				break;
 		}
     	return resultado;
     }
