@@ -24,7 +24,13 @@ public class ArfamcRepo {
                 Arfamc arfamc = new Arfamc(rset.getString(1), rset.getString(2),rset.getString(3),rset.getString(4));
                 arfamcList.add(arfamc);
             }
+            
+            conn.close();
+            stmt.close();
+            rset.close();
+            
             return arfamcList;
+            
         }catch (SQLException ex){
             System.out.println("No se puedo consular las compañias :"+ex.getMessage());
         }
@@ -38,10 +44,15 @@ public class ArfamcRepo {
             Statement stmt = conn.createStatement();
             String sql = "SELECT TRIM(NO_CIA), TRIM(NO_CLIENTE_ONLINE), TRIM(DIREC_SFS), TRIM(NOMBRE) FROM FACTU.ARFAMC WHERE NO_CIA ='"+cia+"'";
             ResultSet rset = stmt.executeQuery(sql);
+            Arfamc arfamc = null;
             while (rset.next()){
-            	Arfamc arfamc = new Arfamc(rset.getString(1), rset.getString(2),rset.getString(3),rset.getString(4));
-            	return arfamc;
+            	arfamc = new Arfamc(rset.getString(1), rset.getString(2),rset.getString(3),rset.getString(4));
             }
+        	conn.close();
+            stmt.close();
+            rset.close();
+            
+        	return arfamc;
             
         }catch (SQLException ex){
             System.out.println("No se puedo consular las compañias :"+ex.getMessage());

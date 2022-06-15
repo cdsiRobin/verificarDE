@@ -22,6 +22,7 @@ public class ArfafeRepo {
             }
             connection.close();
             statement.close();
+            resultSet.close();
             return cias;
         }catch (SQLException ex){
             System.out.println("No se pudo hacer la consulta "+ex.getMessage());
@@ -43,6 +44,7 @@ public class ArfafeRepo {
             }
             connection.close();
             statement.close();
+            resultSet.close();
             return noFactus;
             
         }catch (SQLException ex){
@@ -63,6 +65,7 @@ public class ArfafeRepo {
             cst.execute();
             
             connection.close();
+            cst.close();
         }catch (SQLException ex){
             System.out.println("No se pudo hacer la consulta "+ex.getMessage());
         }

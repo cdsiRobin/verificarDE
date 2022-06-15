@@ -25,6 +25,7 @@ public class DocumentoRepo {
             }
             connection.close();
             statement.close();
+            resultSet.close();
         }catch (SQLException ex){
             System.out.println("No se pudo hacer la consulta, "+ex.getMessage());
         }
