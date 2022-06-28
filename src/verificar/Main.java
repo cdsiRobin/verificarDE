@@ -35,7 +35,7 @@ public class Main {
 	private JFrame frmVerificacinDeDe;
 	private JLabel lblDocumento;
 	private String iconoDocu = "/verificar/iconos/documento.png";
-	private ConsultarController consultarContro;
+	private ConsultarController consultarContro = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -148,14 +148,16 @@ public class Main {
 				/*Path path = Paths.get("");
 				String directoryName = path.toAbsolutePath().toString();
 				" . Nombre de la PC : "+directoryName*/
-				int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de iniciar?");
+				txaLog.setText("INICIAR");
+				int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de Iniciar?");
 				if (respuesta == 0) {
+					//JOptionPane.showMessageDialog(null, "respuesta : "+respuesta);
+					txaLog.setText("INICIAR..");
 					iconoDocu = "/verificar/iconos/envioDocumento.gif";
 					cambiarIconoDocumento(pVistaEnvio, lblDocumento, iconoDocu);
 					cambiarColorTextoAlerta(pPrincipal, pEstado, lblEstado, "INICIADO", 1);
-					
-					Timer timer = new Timer();
-					txaLog.setText("");
+					txaLog.setText("INICIANDO....");
+					Timer timer = new Timer();					
 					consultarContro = new ConsultarController(txaLog);					
 					// cada 5min
 					timer.schedule(consultarContro,0,50000);					

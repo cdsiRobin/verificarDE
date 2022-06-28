@@ -25,6 +25,7 @@ public class DocumentoRepo {
             statement.close();
             resultSet.close();
             sqlite.desconectar();
+            
             return documentoEnti;
         }catch (SQLException ex){
             System.out.println("No se pudo hacer la consulta, "+ex.getMessage());

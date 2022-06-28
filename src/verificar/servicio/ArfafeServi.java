@@ -1,7 +1,6 @@
 package verificar.servicio;
 
 import java.util.List;
-
 import verificar.repositorio.ArfafeRepo;
 
 public class ArfafeServi {

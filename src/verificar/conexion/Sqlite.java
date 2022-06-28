@@ -8,8 +8,10 @@ import javax.swing.JOptionPane;
 
 
 public class Sqlite {
+	
 	private Connection connection = null;
     private String direccionBD;
+    
 	public Sqlite(String direccionBD) {
 		try{
              this.direccionBD = direccionBD;
@@ -20,9 +22,11 @@ public class Sqlite {
              System.out.println("Error de conexión con la B.D SQLite [ " + ex.getMessage() + "]");
 	    }
 	}
+	
     public Connection getConnection() {
         return connection;
     }
+    
     public void desconectar() {
         try {
             connection.close();

@@ -25,7 +25,6 @@ public class Oracle {
     public Connection conexion() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            //Connection  conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:SID","USER","PASS");
             Connection  conexion = DriverManager.getConnection("jdbc:oracle:thin:@"+this.host+":"+this.puerto+":"+this.sid,this.usuario,this.password);
             return conexion;
         } catch (SQLException | ClassNotFoundException ex) {

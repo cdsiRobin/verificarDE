@@ -11,8 +11,8 @@ public class ArfafeRepo {
 
     public List<String> listaCias(){
         try {
-            String sql = "SELECT DISTINCT TRIM(NO_CIA) FROM FACTU.ARFAFE WHERE ESTADO_SUNAT = '0' AND ESTADO NOT IN('A')";
-            Oracle oracle = new Oracle();
+            String sql            = "SELECT DISTINCT TRIM(NO_CIA) FROM FACTU.ARFAFE WHERE NVL(ESTADO_SUNAT,'0') = '0' AND ESTADO NOT IN('A')";
+            Oracle oracle         = new Oracle();
             Connection connection = oracle.conexion();
             Statement statement   = connection.createStatement();
             ResultSet resultSet   = statement.executeQuery(sql);
@@ -33,7 +33,7 @@ public class ArfafeRepo {
     public List<String> listaDocumentoElectronico(String cia){
         try {
             String sql = "SELECT SUBSTR(NO_FACTU,1,4)||'-'||SUBSTR(NO_FACTU,5) NOFACTU FROM FACTU.ARFAFE WHERE NO_CIA = '"+cia+"' " +
-                    "AND ESTADO_SUNAT = '0' AND ESTADO NOT IN('A')";
+                    "AND NVL(ESTADO_SUNAT,'0') = '0' AND ESTADO NOT IN('A')";
             Oracle oracle = new Oracle();
             Connection connection = oracle.conexion();
             Statement statement   = connection.createStatement();

@@ -8,7 +8,7 @@ import verificar.servicio.ArfafeServi;
 
 public class ConsultarController extends TimerTask {
 	
-    private MainContro mainContro;
+    private MainContro mainContro = null;
     private JTextPane txaLog;
     
 	public ConsultarController(JTextPane txaLog) {
@@ -17,12 +17,15 @@ public class ConsultarController extends TimerTask {
 
 	@Override
 	public void run() {
-		this.txaLog.setText("");
 		ArfafeServi arfafeContro = new ArfafeServi();
-		List<String> cias = arfafeContro.listaCias();									
-		for(String cia: cias) {
-			mainContro = new MainContro(cia,txaLog);
-			mainContro.start();
+		List<String> cias = arfafeContro.listaCias();
+		if(!cias.isEmpty()) {
+			for(String cia: cias) {				
+				mainContro = new MainContro(cia,txaLog);
+				mainContro.start();
+			}
+		}else {
+			this.txaLog.setText("No hay Documentos Electrónicos en FACTU.ARFAFE");
 		}
 	}
 	
