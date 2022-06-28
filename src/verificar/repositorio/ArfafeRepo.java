@@ -14,9 +14,9 @@ public class ArfafeRepo {
             String sql = "SELECT DISTINCT TRIM(NO_CIA) FROM FACTU.ARFAFE WHERE ESTADO_SUNAT = '0' AND ESTADO NOT IN('A')";
             Oracle oracle = new Oracle();
             Connection connection = oracle.conexion();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            List<String> cias = new ArrayList<String>();
+            Statement statement   = connection.createStatement();
+            ResultSet resultSet   = statement.executeQuery(sql);
+            List<String> cias     = new ArrayList<String>();
             while (resultSet.next()){
                 cias.add(resultSet.getString(1));
             }
@@ -36,8 +36,8 @@ public class ArfafeRepo {
                     "AND ESTADO_SUNAT = '0' AND ESTADO NOT IN('A')";
             Oracle oracle = new Oracle();
             Connection connection = oracle.conexion();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            Statement statement   = connection.createStatement();
+            ResultSet resultSet   = statement.executeQuery(sql);
             List<String> noFactus = new ArrayList<String>();
             while (resultSet.next()){
                 noFactus.add(resultSet.getString(1));

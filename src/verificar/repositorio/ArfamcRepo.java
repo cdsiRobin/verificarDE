@@ -14,11 +14,11 @@ public class ArfamcRepo {
 
     public List<Arfamc> listaCompania(){
         try {
-            Oracle oracle = new Oracle();
+            Oracle oracle   = new Oracle();
             Connection conn = oracle.conexion();
-            Statement stmt = conn.createStatement();
-            String sql = "SELECT TRIM(NO_CIA), TRIM(NO_CLIENTE_ONLINE), TRIM(DIREC_SFS), TRIM(NOMBRE) FROM FACTU.ARFAMC";
-            ResultSet rset = stmt.executeQuery(sql);
+            Statement stmt  = conn.createStatement();
+            String sql      = "SELECT TRIM(NO_CIA), TRIM(NO_CLIENTE_ONLINE), TRIM(DIREC_SFS), TRIM(NOMBRE) FROM FACTU.ARFAMC";
+            ResultSet rset  = stmt.executeQuery(sql);
             List<Arfamc> arfamcList = new ArrayList<Arfamc>();
             while (rset.next()){
                 Arfamc arfamc = new Arfamc(rset.getString(1), rset.getString(2),rset.getString(3),rset.getString(4));
@@ -39,12 +39,12 @@ public class ArfamcRepo {
     
     public Arfamc getCompania(String cia){
         try {
-            Oracle oracle = new Oracle();
+            Oracle oracle   = new Oracle();
             Connection conn = oracle.conexion();
-            Statement stmt = conn.createStatement();
-            String sql = "SELECT TRIM(NO_CIA), TRIM(NO_CLIENTE_ONLINE), TRIM(DIREC_SFS), TRIM(NOMBRE) FROM FACTU.ARFAMC WHERE NO_CIA ='"+cia+"'";
-            ResultSet rset = stmt.executeQuery(sql);
-            Arfamc arfamc = null;
+            Statement stmt  = conn.createStatement();
+            String sql      = "SELECT TRIM(NO_CIA), TRIM(NO_CLIENTE_ONLINE), TRIM(DIREC_SFS), TRIM(NOMBRE) FROM FACTU.ARFAMC WHERE NO_CIA ='"+cia+"'";
+            ResultSet rset  = stmt.executeQuery(sql);
+            Arfamc arfamc   = null;
             while (rset.next()){
             	arfamc = new Arfamc(rset.getString(1), rset.getString(2),rset.getString(3),rset.getString(4));
             }

@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import verificar.controlador.ConsultarController;
+import verificar.vista.VentanaConexionOracle;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -27,6 +28,7 @@ import javax.swing.JTextPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Timer;
+
 
 public class Main {
 
@@ -91,6 +93,15 @@ public class Main {
 		pVistaEnvio.setLayout(null);
 		
 		JLabel lblBdSqlite = new JLabel();
+		lblBdSqlite.setToolTipText("Configuración tnsname Oracle");
+		lblBdSqlite.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				VentanaConexionOracle vCOracle = new VentanaConexionOracle();
+				vCOracle.setVisible(true);
+			}
+		});
+		lblBdSqlite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblBdSqlite.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBdSqlite.setBounds(10, 11, 37, 42);
 		ImageIcon imagen1= new ImageIcon(Main.class.getResource("/verificar/iconos/BdSqlite.png"));
@@ -147,8 +158,7 @@ public class Main {
 					txaLog.setText("");
 					consultarContro = new ConsultarController(txaLog);					
 					// cada 5min
-					timer.schedule(consultarContro,0,50000);				
-					
+					timer.schedule(consultarContro,0,50000);					
 				}
 			}
 		});
@@ -219,6 +229,4 @@ public class Main {
 		lblEstado.setBounds(10, 11, 127, 30);
 		pEstado.add(lblEstado);	
 	}
-	
-	
 }

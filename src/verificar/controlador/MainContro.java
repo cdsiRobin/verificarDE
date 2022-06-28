@@ -23,7 +23,7 @@ public class MainContro extends Thread  {
 	public void run() {
 		try {
 			ArfafeServi arfafeContro  = new ArfafeServi();
-			ArfamcServi arfamcContro = new ArfamcServi();
+			ArfamcServi arfamcContro  = new ArfamcServi();
 			
 			Arfamc arfamc = arfamcContro.getEmpresas(this.getCia());
 			
