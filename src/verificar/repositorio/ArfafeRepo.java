@@ -9,9 +9,11 @@ import verificar.conexion.Oracle;
 public class ArfafeRepo {
 
 
-    public List<String> listaCias(){
+    public List<String> listaCias(String f1, String f2){
         try {
-            String sql            = "SELECT DISTINCT TRIM(NO_CIA) FROM FACTU.ARFAFE WHERE NVL(ESTADO_SUNAT,'0') = '0' AND ESTADO NOT IN('A')";
+            String sql            = "SELECT DISTINCT TRIM(NO_CIA) FROM FACTU.ARFAFE WHERE NVL(ESTADO_SUNAT,'0') = '0' "
+            		              + "AND SUBSTR(NO_FACTU,0,1) IN('F','B') AND ESTADO NOT IN('A') "
+            		              + "AND FECHA BETWEEN TO_DATE('"+f1+"','DD/MM/YYYY') AND TO_DATE('"+f2+"','DD/MM/YYYY')";
             Oracle oracle         = new Oracle();
             Connection connection = oracle.conexion();
             Statement statement   = connection.createStatement();
@@ -30,10 +32,11 @@ public class ArfafeRepo {
         return null;
     }
 
-    public List<String> listaDocumentoElectronico(String cia){
+    public List<String> listaDocumentoElectronico(String cia,String f1, String f2){
         try {
-            String sql = "SELECT SUBSTR(NO_FACTU,1,4)||'-'||SUBSTR(NO_FACTU,5) NOFACTU FROM FACTU.ARFAFE WHERE NO_CIA = '"+cia+"' " +
-                    "AND NVL(ESTADO_SUNAT,'0') = '0' AND ESTADO NOT IN('A')";
+            String sql = "SELECT SUBSTR(NO_FACTU,1,4)||'-'||SUBSTR(NO_FACTU,5) NOFACTU FROM FACTU.ARFAFE WHERE NO_CIA = '"+cia+"' "
+                    + "AND NVL(ESTADO_SUNAT,'0') = '0' AND SUBSTR(NO_FACTU,0,1) IN('F','B') AND ESTADO NOT IN('A')"
+                    + "AND FECHA BETWEEN TO_DATE('"+f1+"','DD/MM/YYYY') AND TO_DATE('"+f2+"','DD/MM/YYYY')";
             Oracle oracle = new Oracle();
             Connection connection = oracle.conexion();
             Statement statement   = connection.createStatement();

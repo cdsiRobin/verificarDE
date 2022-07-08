@@ -5,14 +5,14 @@ import verificar.repositorio.ArfafeRepo;
 
 public class ArfafeServi {
 	
-	public List<String> listaCias(){
+	public List<String> listaCias(String f1, String f2){
         ArfafeRepo arfafeRepo = new ArfafeRepo();
-        return arfafeRepo.listaCias();
+        return arfafeRepo.listaCias(f1,f2);
     }
 
-    public List<String> listarDocuElectro(String cia){
+    public List<String> listarDocuElectro(String cia,String f1, String f2){
         ArfafeRepo arfafeRepo = new ArfafeRepo();
-        return arfafeRepo.listaDocumentoElectronico(cia);
+        return arfafeRepo.listaDocumentoElectronico(cia,f1,f2);
     }
 
     public void actuEstadoSunatDocuElec(String cia, String noFactu, String estadoSunat){    	
@@ -41,6 +41,7 @@ public class ArfafeServi {
 				break;
 			case "11":
 				resultado = "2";
+				break;
 			default:
 				resultado = "0";
 				break;

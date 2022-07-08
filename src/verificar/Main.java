@@ -27,8 +27,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
-
+import javax.swing.JTextField;
 
 public class Main {
 
@@ -36,6 +39,9 @@ public class Main {
 	private JLabel lblDocumento;
 	private String iconoDocu = "/verificar/iconos/documento.png";
 	private ConsultarController consultarContro = null;
+	private JTextField txtMinuto;
+	private JTextField txtF2;
+	private JTextField txtF1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,7 +68,7 @@ public class Main {
 		
 		JPanel pPrincipal = new JPanel();
 		pPrincipal.setBackground(Color.WHITE);
-		pPrincipal.setBounds(0, 0, 358, 271);
+		pPrincipal.setBounds(0, 0, 465, 305);
 		frmVerificacinDeDe.getContentPane().add(pPrincipal);
 		pPrincipal.setLayout(null);
 		
@@ -82,13 +88,13 @@ public class Main {
 		pEstado.add(lblEstado);			
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 74, 338, 2);
+		separator.setBounds(10, 74, 445, 2);
 		pPrincipal.add(separator);
 		
 		JPanel pVistaEnvio = new JPanel();
 		pVistaEnvio.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pVistaEnvio.setBackground(Color.WHITE);
-		pVistaEnvio.setBounds(10, 85, 338, 175);
+		pVistaEnvio.setBounds(10, 85, 445, 175);
 		pPrincipal.add(pVistaEnvio);
 		pVistaEnvio.setLayout(null);
 		
@@ -129,12 +135,12 @@ public class Main {
 		JPanel pLog = new JPanel();
 		pLog.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pLog.setBackground(Color.WHITE);
-		pLog.setBounds(57, 11, 271, 153);
+		pLog.setBounds(57, 11, 378, 153);
 		pVistaEnvio.add(pLog);
 		pLog.setLayout(null);
 		
 		JScrollPane scpLog = new JScrollPane();
-		scpLog.setBounds(0, 0, 271, 153);
+		scpLog.setBounds(0, 0, 376, 153);
 		pLog.add(scpLog);
 		
 		JTextPane txaLog = new JTextPane();       
@@ -144,23 +150,18 @@ public class Main {
 		// EVENTO CLICK DEL BOTON INICIAR
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				/*Path path = Paths.get("");
-				String directoryName = path.toAbsolutePath().toString();
-				" . Nombre de la PC : "+directoryName*/
+			public void mousePressed(MouseEvent e) {			
 				txaLog.setText("INICIAR");
-				int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de Iniciar?");
+				int respuesta = JOptionPane.showConfirmDialog(null, "¿Está Seguro de Iniciar?");
 				if (respuesta == 0) {
-					//JOptionPane.showMessageDialog(null, "respuesta : "+respuesta);
-					txaLog.setText("INICIAR..");
 					iconoDocu = "/verificar/iconos/envioDocumento.gif";
 					cambiarIconoDocumento(pVistaEnvio, lblDocumento, iconoDocu);
 					cambiarColorTextoAlerta(pPrincipal, pEstado, lblEstado, "INICIADO", 1);
-					txaLog.setText("INICIANDO....");
 					Timer timer = new Timer();					
-					consultarContro = new ConsultarController(txaLog);					
+					consultarContro = new ConsultarController(txaLog,txtF1.getText(),txtF2.getText(),txtF2);
 					// cada 5min
-					timer.schedule(consultarContro,0,50000);					
+					int minuto = Integer.parseInt(txtMinuto.getText()) * 10000;
+					timer.schedule(consultarContro,0,minuto);
 				}
 			}
 		});
@@ -170,7 +171,7 @@ public class Main {
 		btnIniciar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnIniciar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnIniciar.setActionCommand("");
-		btnIniciar.setBounds(259, 11, 89, 52);
+		btnIniciar.setBounds(366, 11, 89, 52);
 		pPrincipal.add(btnIniciar);
 		
 		JButton btnApagar = new JButton();
@@ -193,11 +194,59 @@ public class Main {
 		btnApagar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnApagar.setAlignmentX(0.5f);
 		btnApagar.setActionCommand("");
-		btnApagar.setBounds(167, 11, 89, 52);
+		btnApagar.setBounds(267, 11, 89, 52);
 		pPrincipal.add(btnApagar);
 		
-		frmVerificacinDeDe.setBounds(100, 100, 374, 310);
+		JLabel lblTiempoConsulta = new JLabel("Minuto Consulta");
+		lblTiempoConsulta.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTiempoConsulta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTiempoConsulta.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblTiempoConsulta.setBounds(10, 269, 109, 14);
+		pPrincipal.add(lblTiempoConsulta);
+		
+		txtMinuto = new JTextField();
+		txtMinuto.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtMinuto.setHorizontalAlignment(SwingConstants.CENTER);
+		txtMinuto.setBounds(122, 266, 46, 20);
+		pPrincipal.add(txtMinuto);
+		txtMinuto.setColumns(10);
+		txtMinuto.setText("5");
+		
+		JLabel lblRangoFecha = new JLabel("Fecha");
+		lblRangoFecha.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblRangoFecha.setBounds(199, 269, 46, 14);
+		pPrincipal.add(lblRangoFecha);
+		
+		txtF2 = new JTextField();
+		txtF2.setHorizontalAlignment(SwingConstants.CENTER);
+		txtF2.setBounds(366, 266, 77, 20);
+		pPrincipal.add(txtF2);
+		txtF2.setColumns(10);
+		txtF2.setText(this.getFechaActual(1));
+		
+		txtF1 = new JTextField();
+		txtF1.setHorizontalAlignment(SwingConstants.CENTER);
+		txtF1.setColumns(10);
+		txtF1.setBounds(243, 266, 75, 20);
+		txtF1.setText(this.getFechaActual(-7));
+		pPrincipal.add(txtF1);
+		
+		JLabel lblHasta = new JLabel("Hasta");
+		lblHasta.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblHasta.setBounds(325, 269, 46, 14);
+		pPrincipal.add(lblHasta);
+		
+		frmVerificacinDeDe.setBounds(100, 100, 481, 344);
 		frmVerificacinDeDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	private String getFechaActual(int dias) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar calendario = Calendar.getInstance();
+		calendario.add(Calendar.DAY_OF_YEAR, dias);
+		Date fecha = calendario.getTime();
+		String fechaActual = sdf.format(fecha);
+		return fechaActual;
 	}
 	
 	private void cambiarIconoDocumento(JPanel vistaEnvio, JLabel documento, String iconoDocmento ) {

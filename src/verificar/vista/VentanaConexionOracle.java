@@ -7,25 +7,29 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import verificar.conexion.Oracle;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class VentanaConexionOracle extends JDialog {
 
+	private static final long serialVersionUID = 1L;
+	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUsuario;
 	private JTextField txtSid;
 	private JPasswordField txtPassword;
 	private JTextField txtPuerto;
-	private JTextField textField;
+	private JTextField textHost;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			VentanaConexionOracle dialog = new VentanaConexionOracle();
@@ -36,9 +40,7 @@ public class VentanaConexionOracle extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
+
 	public VentanaConexionOracle() {
 		setBounds(100, 100, 450, 187);
 		getContentPane().setLayout(new BorderLayout());
@@ -51,6 +53,8 @@ public class VentanaConexionOracle extends JDialog {
 		contentPanel.add(lblUsuario);
 		
 		txtUsuario = new JTextField();
+		txtUsuario.setFont(new Font("Dialog", Font.BOLD, 12));
+		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setBounds(74, 8, 86, 20);
 		contentPanel.add(txtUsuario);
 		txtUsuario.setColumns(10);
@@ -64,6 +68,8 @@ public class VentanaConexionOracle extends JDialog {
 		contentPanel.add(lblSid);
 		
 		txtSid = new JTextField();
+		txtSid.setFont(new Font("Dialog", Font.BOLD, 12));
+		txtSid.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSid.setBounds(208, 8, 86, 20);
 		contentPanel.add(txtSid);
 		txtSid.setColumns(10);
@@ -73,10 +79,13 @@ public class VentanaConexionOracle extends JDialog {
 		contentPanel.add(lblPuerto);
 		
 		txtPassword = new JPasswordField();
+		txtPassword.setFont(new Font("Dialog", Font.BOLD, 12));
 		txtPassword.setBounds(74, 39, 86, 20);
 		contentPanel.add(txtPassword);
 		
 		txtPuerto = new JTextField();
+		txtPuerto.setFont(new Font("Dialog", Font.BOLD, 12));
+		txtPuerto.setHorizontalAlignment(SwingConstants.CENTER);
 		txtPuerto.setBounds(348, 8, 64, 20);
 		contentPanel.add(txtPuerto);
 		txtPuerto.setColumns(10);
@@ -85,12 +94,22 @@ public class VentanaConexionOracle extends JDialog {
 		lblHost.setBounds(170, 40, 28, 14);
 		contentPanel.add(lblHost);
 		
-		textField = new JTextField();
-		textField.setBounds(208, 37, 204, 20);
-		contentPanel.add(textField);
-		textField.setColumns(10);
+		textHost = new JTextField();
+		textHost.setFont(new Font("Dialog", Font.BOLD, 12));
+		textHost.setHorizontalAlignment(SwingConstants.CENTER);
+		textHost.setBounds(208, 37, 204, 20);
+		contentPanel.add(textHost);
+		textHost.setColumns(10);
 		
 		JButton btnTest = new JButton("Test");
+		btnTest.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// EVENTO CLICK DEL TEST
+				Oracle oracle = new Oracle();
+				oracle.test();
+			}
+		});
 		btnTest.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTest.setBounds(10, 77, 402, 32);
 		contentPanel.add(btnTest);
@@ -111,5 +130,16 @@ public class VentanaConexionOracle extends JDialog {
 				buttonPane.add(btnCerrar);
 			}
 		}
+		
+		this.getOracle();
+	}
+   
+	private void getOracle() {
+		Oracle objO = new Oracle();
+		txtUsuario.setText(objO.getUsuario());
+		txtPassword.setText(objO.getPassword());
+		txtPuerto.setText(objO.getPuerto());
+		txtSid.setText(objO.getSid());
+		textHost.setText(objO.getHost());
 	}
 }
